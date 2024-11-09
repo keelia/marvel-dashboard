@@ -2,6 +2,7 @@ import { Typography, Button, Input } from "@material-tailwind/react";
 import { Link, useLoaderData } from "react-router-dom";
 
 import { Character, useCharacters } from "../../api/marvel/marvelApi";
+import Loading from "../../components/Loading";
 
 export function CharacterList() {
   const { data, isLoading, error } = useCharacters();
@@ -28,7 +29,7 @@ export function CharacterList() {
         </div>
       </div>
       {isLoading ? (
-        <div>isLoading</div>
+        <Loading />
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
           {data.map((item: Character) => (
