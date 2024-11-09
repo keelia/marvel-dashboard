@@ -1,4 +1,4 @@
-import { CharacterList } from "./pages/characters/List";
+import { Outlet } from "react-router-dom";
 import { Typography } from "@material-tailwind/react";
 import "./App.css";
 
@@ -23,7 +23,7 @@ function App() {
         </nav>
       </header>
       <main className="container pt-6">
-        <CharacterList />
+        <Outlet />
       </main>
     </div>
   );

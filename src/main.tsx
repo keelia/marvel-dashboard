@@ -2,20 +2,25 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.tsx";
+import { CharacterList } from "./pages/characters/CharacterList.tsx";
 import { CharacterView } from "./pages/characters/CharacterView.tsx";
 import ErrorPage from "./pages/Error.tsx";
 import "./index.css";
 
 const router = createBrowserRouter([
   {
-    path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
-  },
-
-  {
-    path: "characters/:characterId",
-    element: <CharacterView />,
+    children: [
+      {
+        path: "/",
+        element: <CharacterList />,
+      },
+      {
+        path: "characters/:characterId",
+        element: <CharacterView />,
+      },
+    ],
   },
 ]);
 

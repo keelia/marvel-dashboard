@@ -1,22 +1,20 @@
 import { Typography, Button, Input } from "@material-tailwind/react";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { Character, useCharacters } from "../../api/marvel/marvelApi";
 import Loading from "../../components/Loading";
 
 export function CharacterList() {
-  const { data, isLoading, error } = useCharacters();
-  const loaderData = useLoaderData();
-  console.log("loaderData", loaderData);
+  const { data, isLoading } = useCharacters();
   return (
-    <div className="">
+    <div>
       <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
         <div>
           <Typography variant="h5" color="blue-gray">
             Characters
           </Typography>
           <Typography color="gray" className="mt-1 font-normal">
-            These are details about the characterss
+            These are list about the characters
           </Typography>
         </div>
         <div className="flex w-full shrink-0 gap-2 md:w-max">
