@@ -1,35 +1,31 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { CharacterList } from "./pages/characters/List";
+import { Typography } from "@material-tailwind/react";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Editsss <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="w-full">
+      <header className="sticky top-0 z-10 bg-gray-200">
+        <nav
+          aria-label="Global"
+          className="justify-betwee mx-auto flex items-center p-6 lg:px-8"
+        >
+          <div className="flex flex-wrap items-center justify-between gap-y-4 text-black">
+            <Typography
+              as="a"
+              href="#"
+              variant="h6"
+              className="ml-2 mr-4 cursor-pointer py-1.5"
+            >
+              Marvel
+            </Typography>
+          </div>
+        </nav>
+      </header>
+      <main className="container pt-6">
+        <CharacterList />
+      </main>
+    </div>
   );
 }
 
