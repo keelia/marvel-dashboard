@@ -17,7 +17,7 @@ function App() {
               variant="h6"
               className="ml-2 mr-4 cursor-pointer py-1.5"
             >
-              Marvel
+              Marvel Profiles
             </Typography>
           </div>
         </nav>
