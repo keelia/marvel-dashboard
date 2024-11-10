@@ -43,7 +43,7 @@ npm run dev
 
 - State Management: [SWR](https://swr.vercel.app/)
 - HTTP Client: [Axios](https://www.npmjs.com/package/axios)
-- Routing: React Router Dom(https://reactrouter.com/en/6.27.0/start/tutorial)
+- Routing: [React Router Dom](https://reactrouter.com/en/6.27.0/start/tutorial)
 
 ## Styling
 
