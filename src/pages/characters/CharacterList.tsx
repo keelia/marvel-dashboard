@@ -23,11 +23,7 @@ export function CharacterList() {
       isLoading={isLoading}
       isLoadMore={isLoadMore}
       allLoaded={allLoaded}
-      onLoadMore={() => {
-        if (!isLoading && !isLoadMore && !allLoaded) {
-          setSize(size + 1);
-        }
-      }}
+      onLoadMore={() => setSize(size + 1)}
       actions={[
         {
           key: "search",

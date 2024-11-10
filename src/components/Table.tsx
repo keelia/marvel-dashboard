@@ -1,6 +1,7 @@
 import React, { ReactNode, useCallback, useRef } from "react";
 import Loading from "./Loading";
 import { debounce } from "lodash";
+
 export enum ActionPosition {
   Left,
   Right,
@@ -19,6 +20,7 @@ const Table = ({
   title: string;
   isLoading: boolean;
   isLoadMore: boolean;
+  allLoaded: boolean;
   columns: {
     dataKey: string;
     title?: ReactNode;
@@ -34,9 +36,8 @@ const Table = ({
       },
     ) => ReactNode;
   }[];
-  actions?: { key: string; position: ActionPosition; componnet: ReactNode }[];
   dataSource: any[];
-  allLoaded: boolean;
+  actions?: { key: string; position: ActionPosition; componnet: ReactNode }[];
   onLoadMore: () => void;
 }) => {
   const scrollRef = useRef<{
@@ -50,7 +51,7 @@ const Table = ({
         const isScrollToBottom =
           scrollRef.current.scrollTop < scrollTop &&
           clientHeight + scrollTop >= scrollHeight * 0.75;
-        if (isScrollToBottom && !allLoaded) {
+        if (isScrollToBottom && !isLoading && !isLoadMore && !allLoaded) {
           onLoadMore();
         }
       }
@@ -66,7 +67,7 @@ const Table = ({
           <div>
             <h5 className="text-blue-gray-900 block font-sans text-xl font-semibold leading-snug tracking-normal antialiased">
               {title}
-              {isLoadMore && " ( is loading more )"}
+              {!isLoading && isLoadMore && " ( is loading more )"}
             </h5>
           </div>
         </div>
