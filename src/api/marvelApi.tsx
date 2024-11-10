@@ -56,7 +56,7 @@ export const useCharactersInfinite = (queryParams: CharactersQueryParams) => {
       fetcher,
     );
 
-  const { characters, allLoaded } = useMemo(() => {
+  const { characters, allLoaded, isLoadMore } = useMemo(() => {
     const characters = [];
     for (const segment of data || []) {
       characters.push(...segment.results);
@@ -64,11 +64,16 @@ export const useCharactersInfinite = (queryParams: CharactersQueryParams) => {
     return {
       characters,
       allLoaded: (data?.[0]?.total || 0) === (characters?.length || 0),
+      isLoadMore:
+        isLoading ||
+        !!(size > 0 && data && typeof data[size - 1] === "undefined"),
     };
-  }, [data]);
+  }, [data, isLoading, size]);
+
   return {
     characters,
     isLoading,
+    isLoadMore,
     error,
     allLoaded,
     size,

@@ -15,15 +15,16 @@ export function CharacterList() {
     limit: 20,
     offset: 0,
   });
-  const { characters, isLoading, allLoaded, size, setSize } =
+  const { characters, isLoading, allLoaded, size, setSize, isLoadMore } =
     useCharactersInfinite(queryParams);
   return (
     <Table
       title="Characters"
       isLoading={isLoading}
+      isLoadMore={isLoadMore}
       allLoaded={allLoaded}
       onLoadMore={() => {
-        if (!isLoading || !allLoaded) {
+        if (!isLoading && !isLoadMore && !allLoaded) {
           setSize(size + 1);
         }
       }}

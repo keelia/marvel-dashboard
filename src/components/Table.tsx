@@ -8,17 +8,17 @@ export enum ActionPosition {
 
 const Table = ({
   title,
-  subTitle,
   columns,
   dataSource,
   isLoading,
+  isLoadMore,
   actions,
   allLoaded,
   onLoadMore,
 }: {
   title: string;
-  subTitle?: string;
   isLoading: boolean;
+  isLoadMore: boolean;
   columns: {
     dataKey: string;
     title?: ReactNode;
@@ -66,10 +66,8 @@ const Table = ({
           <div>
             <h5 className="text-blue-gray-900 block font-sans text-xl font-semibold leading-snug tracking-normal antialiased">
               {title}
+              {isLoadMore && " ( is loading more )"}
             </h5>
-            <p className="mt-1 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
-              {subTitle}
-            </p>
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
@@ -96,32 +94,32 @@ const Table = ({
         </div>
       </div>
       <div className="p-6 px-0">
-        <div
-          className="table-wrp block max-h-[80vh] overflow-y-auto"
-          onScroll={(e) => onDebouncedScoll(e.target)}
-        >
-          <table className="w-full table-auto">
-            <thead className="sticky top-0 z-10 border-b bg-white">
-              <tr>
-                {columns.map((col) => (
-                  <th
-                    key={col.dataKey}
-                    className={`border-blue-gray-100 bg-blue-gray-50/50 hover:bg-blue-gray-50 cursor-pointer border-y p-4 transition-colors`}
-                  >
-                    <p className="text-blue-gray-900 flex items-center justify-between gap-2 font-sans text-sm font-normal leading-none antialiased opacity-70">
-                      {col.onHeaderRender
-                        ? col.onHeaderRender(col.title)
-                        : col.title}
-                    </p>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {isLoading ? (
-                <Loading />
-              ) : (
-                dataSource.map((item, index) => (
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div
+            className="table-wrp block max-h-[80vh] overflow-y-auto"
+            onScroll={(e) => onDebouncedScoll(e.target)}
+          >
+            <table className="w-full table-auto">
+              <thead className="sticky top-0 z-10 border-b bg-white">
+                <tr>
+                  {columns.map((col) => (
+                    <th
+                      key={col.dataKey}
+                      className={`border-blue-gray-100 bg-blue-gray-50/50 hover:bg-blue-gray-50 cursor-pointer border-y p-4 transition-colors`}
+                    >
+                      <div className="text-blue-gray-900 flex items-center justify-between gap-2 font-sans text-sm font-normal leading-none antialiased opacity-70">
+                        {col.onHeaderRender
+                          ? col.onHeaderRender(col.title)
+                          : col.title}
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {dataSource.map((item, index) => (
                   <tr key={index}>
                     {columns.map((col, colIndex) => (
                       <td
@@ -137,11 +135,11 @@ const Table = ({
                       </td>
                     ))}
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );
