@@ -37,7 +37,7 @@ npm run dev
 
 - Character Detail Page
   - Click "Read More" on any character row to view detailed information about that character.
-  - Use the breadcrumb link to return to the Home page
+  - Use the breadcrumb link to return to the Home page.
 
 ## Libraries Used
 
@@ -47,11 +47,11 @@ npm run dev
 
 ## Styling
 
-- CSS Framework: [TailwindCSS](<(https://tailwindcss.com/)>)
-- Component Library: [Material Tailwind](<(https://www.material-tailwind.com/)>)
+- CSS Framework: [TailwindCSS](https://tailwindcss.com/)
+- Component Library: [Material Tailwind](https://www.material-tailwind.com/)
 
 ## Linting and Formatting
 
 - Linting: Configured with ESLint
 - Formatting: Configured with Prettier
-- Tailwind Class Sorting: Automatic class sorting with [Prettier plugin for Tailwind CSS](<(https://tailwindcss.com/blog/automatic-class-sorting-with-prettier)>)
+- Tailwind Class Sorting: Automatic class sorting with [Prettier plugin for Tailwind CSS](https://tailwindcss.com/blog/automatic-class-sorting-with-prettier)
