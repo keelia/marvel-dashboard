@@ -1,75 +1,62 @@
-import {
-  List,
-  ListItem,
-  ListItemPrefix,
-  Avatar,
-  Typography,
-  Navbar,
-  Button,
-  Input,
-} from "@material-tailwind/react";
 import { useParams } from "react-router-dom";
-import { Character, useCharacter } from "../../api/marvel/marvelApi";
+import { useCharacter } from "../../api/marvelApi";
+import Loading from "../../components/Loading";
+import { Avatar, Breadcrumbs } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 export function CharacterView() {
   const { characterId } = useParams();
-  const { data, isLoading, error } = useCharacter(characterId);
-  console.log(data);
+  const { data, isLoading } = useCharacter(characterId);
   return (
-    <div>
+    <div className="bg-gray-100">
+      <Breadcrumbs className="m-2 bg-transparent">
+        <Link to={"/"} className="opacity-60">
+          Characters
+        </Link>
+        {!isLoading && <a href="#">{data?.name}</a>}
+      </Breadcrumbs>
       {isLoading ? (
-        <div>isLoading</div>
+        <Loading />
       ) : (
-        <div className="bg-white">
-          <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
+        <div className="bg-white p-6">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            <Avatar
+              src={`${data?.thumbnail.path}.${data?.thumbnail.extension}`}
+              alt={data?.name}
+            />
+            {data?.name}
+          </h2>
+          <div className="mx-auto grid max-w-2xl grid-cols-1 items-start gap-x-8 gap-y-16 py-24 sm:py-32 lg:max-w-7xl lg:grid-cols-2">
             <div>
+              <p className="mt-4 text-gray-500">{data?.description}</p>
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                {data.name}
+                Comics
               </h2>
-              <p className="mt-4 text-gray-500">
-                The walnut wood card tray is precision milled to perfectly fit a
-                stack of Focus cards. The powder coated steel divider separates
-                active cards from new ones, or can be used to archive important
-                task lists.
-              </p>
-
               <dl className="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:gap-x-8">
-                {/* {features.map((feature) => (
+                {data?.comics?.items?.map((item: { name: string }) => (
                   <div
-                    key={feature.name}
+                    key={item.name}
                     className="border-t border-gray-200 pt-4"
                   >
-                    <dt className="font-medium text-gray-900">
-                      {feature.name}
-                    </dt>
-                    <dd className="mt-2 text-sm text-gray-500">
-                      {feature.description}
-                    </dd>
+                    {item.name}
                   </div>
-                ))} */}
+                ))}
               </dl>
             </div>
-            <div className="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8">
-              <img
-                alt="Walnut card tray with white powder coated steel divider and 3 punchout holes."
-                src="https://tailwindui.com/plus/img/ecommerce-images/product-feature-03-detail-01.jpg"
-                className="rounded-lg bg-gray-100"
-              />
-              <img
-                alt="Top down view of walnut card tray with embedded magnets and card groove."
-                src="https://tailwindui.com/plus/img/ecommerce-images/product-feature-03-detail-02.jpg"
-                className="rounded-lg bg-gray-100"
-              />
-              <img
-                alt="Side of walnut card tray with card groove and recessed card area."
-                src="https://tailwindui.com/plus/img/ecommerce-images/product-feature-03-detail-03.jpg"
-                className="rounded-lg bg-gray-100"
-              />
-              <img
-                alt="Walnut card tray filled with cards and card angled in dedicated groove."
-                src="https://tailwindui.com/plus/img/ecommerce-images/product-feature-03-detail-04.jpg"
-                className="rounded-lg bg-gray-100"
-              />
+            <div className="">
+              <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                Series
+              </h2>
+              <dl className="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:gap-x-8">
+                {data?.series?.items?.map((item: { name: string }) => (
+                  <div
+                    key={item.name}
+                    className="border-t border-gray-200 pt-4"
+                  >
+                    {item.name}
+                  </div>
+                ))}
+              </dl>
             </div>
           </div>
         </div>

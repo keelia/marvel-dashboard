@@ -4,8 +4,8 @@ import "./App.css";
 
 function App() {
   return (
-    <div className="w-full">
-      <header className="sticky top-0 z-10 bg-gray-200">
+    <div className="h-screen w-full">
+      <header className="sticky top-0 z-10 h-24 bg-gray-200">
         <nav
           aria-label="Global"
           className="justify-betwee mx-auto flex items-center p-6 lg:px-8"
@@ -22,7 +22,10 @@ function App() {
           </div>
         </nav>
       </header>
-      <main className="container pt-6">
+      <main
+        className="container overflow-hidden"
+        style={{ maxHeight: "calc(100vh - 8rem)" }}
+      >
         <Outlet />
       </main>
     </div>

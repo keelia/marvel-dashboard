@@ -1,66 +1,103 @@
-import { Typography, Button, Input } from "@material-tailwind/react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-
-import { Character, useCharacters } from "../../api/marvel/marvelApi";
-import Loading from "../../components/Loading";
+import { Typography, Tooltip } from "@material-tailwind/react";
+import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
+import SearchBox from "../../components/SearchBox";
+import Table, { ActionPosition } from "../../components/Table";
+import Avatar from "../../components/Avatar";
+import { useCharactersInfinite } from "../../api/marvelApi";
+import { Character } from "../../model/Character";
 
 export function CharacterList() {
-  const { data, isLoading } = useCharacters();
+  const [queryParams, setQueryParams] = useState({
+    nameStartsWith: "",
+    orderBy: "name",
+    limit: 20,
+    offset: 0,
+  });
+  const { characters, isLoading, allLoaded, size, setSize } =
+    useCharactersInfinite(queryParams);
   return (
-    <div>
-      <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
-        <div>
-          <Typography variant="h5" color="blue-gray">
-            Characters
-          </Typography>
-          <Typography color="gray" className="mt-1 font-normal">
-            These are list about the characters
-          </Typography>
-        </div>
-        <div className="flex w-full shrink-0 gap-2 md:w-max">
-          <div className="w-full md:w-72">
-            <Input label="Search" />
-          </div>
-          <Button className="flex items-center gap-3" size="sm">
-            Search
-          </Button>
-        </div>
-      </div>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-          {data.map((item: Character) => (
-            <div
-              key={item.id}
-              className="relative my-6 flex w-96 flex-col rounded-lg border border-slate-200 bg-white shadow-sm"
+    <Table
+      title="Characters"
+      isLoading={isLoading}
+      allLoaded={allLoaded}
+      onLoadMore={() => {
+        if (!isLoading || !allLoaded) {
+          setSize(size + 1);
+        }
+      }}
+      actions={[
+        {
+          key: "search",
+          position: ActionPosition.Right,
+          componnet: (
+            <SearchBox
+              placeholder="Search by Name or Comics"
+              onSearch={(search) =>
+                setQueryParams((prev) => ({ ...prev, nameStartsWith: search }))
+              }
+            />
+          ),
+        },
+      ]}
+      dataSource={characters || []}
+      columns={[
+        {
+          title: "Thumbnail",
+          dataKey: "thumbnail",
+          render: (
+            thumbnail: {
+              path: string;
+              extension: string;
+            },
+            item: Character,
+          ) => (
+            <Avatar
+              src={`${thumbnail.path}.${thumbnail.extension}`}
+              alt={item.name}
+            />
+          ),
+        },
+        {
+          title: "Name",
+          dataKey: "name",
+          onHeaderRender: (title) => (
+            <Tooltip
+              content={
+                queryParams.orderBy.startsWith("-")
+                  ? "Order by Asc"
+                  : "Order by Desc"
+              }
             >
-              <div className="relative m-2.5 h-56 overflow-hidden rounded-md text-white">
-                <img
-                  alt={item.name}
-                  src={`${item.thumbnail.path}.${item.thumbnail.extension}`}
-                />
-              </div>
-              <div className="p-4">
-                <h6 className="mb-2 text-xl font-semibold text-slate-800">
-                  {item.name}
-                </h6>
-                <p className="font-light leading-normal text-slate-600">
-                  {item.description}
-                </p>
-              </div>
-              <div className="mt-2 px-4 pb-4 pt-0">
-                <Link
-                  className="rounded-md border border-transparent bg-slate-800 px-4 py-2 text-center text-sm text-black shadow-md transition-all hover:bg-slate-700 hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                  to={`characters/${item.id}`}
-                >
-                  Read More
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+              <Typography
+                className="flex w-full justify-between text-left"
+                onClick={() =>
+                  setQueryParams((prev) => ({
+                    ...prev,
+                    orderBy: prev.orderBy.startsWith("-") ? "name" : "-name",
+                  }))
+                }
+              >
+                <>
+                  {title}
+                  <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
+                </>
+              </Typography>
+            </Tooltip>
+          ),
+        },
+        {
+          title: "Descriptions",
+          dataKey: "description",
+        },
+        {
+          dataKey: "id",
+          render: (id: string) => (
+            <Link to={`characters/${id}`}>Read More</Link>
+          ),
+        },
+      ]}
+    />
   );
 }

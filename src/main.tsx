@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.tsx";
 import { CharacterList } from "./pages/characters/CharacterList.tsx";
 import { CharacterView } from "./pages/characters/CharacterView.tsx";
-import ErrorPage from "./pages/Error.tsx";
+import ErrorPage from "./pages/ErrorPage.tsx";
 import "./index.css";
 
 const router = createBrowserRouter([
