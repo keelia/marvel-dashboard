@@ -1,50 +1,57 @@
-# React + TypeScript + Vite
+# Marvel Profiles: A Dashboard for Marvel Fans
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Marvel Profiles** is a dashboard where fans can explore Marvel characters. This project is built using [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), and [Vite](https://vite.dev/).
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Install [Node.js](https://nodejs.org/) (version >= 20.12.2).
 
-## Expanding the ESLint configuration
+## Quick Start
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+To set up the project locally:
 
-- Configure the top-level `parserOptions` property like this:
+1. **Clone this repository**
+2. Create a .env file in the root folder and add the following environment variables:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+VITE_REACT_APP_MARVEL_PUBLIC_API_KEY="<Your_MARVEL_PUBLIC_API_KEY>"
+VITE_REACT_APP_MARVEL_PRIVATE_API_KEY="<Your_MARVEL_PRIVATE_API_KEY>"
+VITE_REACT_APP_MARVEL_API_PATH="https://gateway.marvel.com:443"
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+3. Install dependencies and start the local development server:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+npm install
+npm run dev
 ```
+
+4. Open localhost:5173 to view the application in your browser.
+
+## Pages
+
+- Home Page
+
+  - Displays a list of Marvel characters.
+  - Supports infinite scrolling to load additional characters.
+
+- Character Detail Page
+  - Click "Read More" on any character row to view detailed information about that character.
+  - Use the breadcrumb link to return to the Home page
+
+## Libraries Used
+
+- State Management: SWR
+- HTTP Client: Axios
+- Routing: React Router Dom
+
+## Styling
+
+- CSS Framework: [TailwindCSS](<(https://tailwindcss.com/)>)
+- Component Library: [Material Tailwind](<(https://www.material-tailwind.com/)>)
+
+## Linting and Formatting
+
+- Linting: Configured with ESLint
+- Formatting: Configured with Prettier
+- Tailwind Class Sorting: Automatic class sorting with [Prettier plugin for Tailwind CSS](<(https://tailwindcss.com/blog/automatic-class-sorting-with-prettier)>)
